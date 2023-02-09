@@ -198,12 +198,12 @@ void ArmController::record_circle(int file_number)
 	if (play_time_ < 10.29 + 1.0)
 	{
 		hw_plot_files_[file_number]
-		<< ee_torque_.transpose()[0] << "\t"
-	    << ee_torque_.transpose()[1] << "\t"
-	    << ee_torque_.transpose()[2] << "\t" 
-	    << ee_force_.transpose()[0] << "\t"
+		<< ee_force_.transpose()[0] << "\t"
 	    << ee_force_.transpose()[1] << "\t"
-	    << ee_force_.transpose()[2] << "\n";
+	    << ee_force_.transpose()[2] << "\t" 
+	    << ee_torque_.transpose()[0] << "\t"
+	    << ee_torque_.transpose()[1] << "\t"
+	    << ee_torque_.transpose()[2] << "\n";
 	}
 }
 void ArmController::record_eight(int file_number)
@@ -211,12 +211,12 @@ void ArmController::record_eight(int file_number)
 	if (play_time_ < 14.01 + 1.0)
 	{
 		hw_plot_files_[file_number]
-		<< ee_torque_.transpose()[0] << "\t"
-	    << ee_torque_.transpose()[1] << "\t"
-	    << ee_torque_.transpose()[2] << "\t" 
-	    << ee_force_.transpose()[0] << "\t"
+		<< ee_force_.transpose()[0] << "\t"
 	    << ee_force_.transpose()[1] << "\t"
-	    << ee_force_.transpose()[2] << "\n";
+	    << ee_force_.transpose()[2] << "\t" 
+	    << ee_torque_.transpose()[0] << "\t"
+	    << ee_torque_.transpose()[1] << "\t"
+	    << ee_torque_.transpose()[2] << "\n";
 	}
 }
 void ArmController::record_square(int file_number)
@@ -224,12 +224,12 @@ void ArmController::record_square(int file_number)
 	if (play_time_ < 12.05 + 1.0)
 	{
 		hw_plot_files_[file_number]
-		<< ee_torque_.transpose()[0] << "\t"
-	    << ee_torque_.transpose()[1] << "\t"
-	    << ee_torque_.transpose()[2] << "\t" 
-	    << ee_force_.transpose()[0] << "\t"
+		<< ee_force_.transpose()[0] << "\t"
 	    << ee_force_.transpose()[1] << "\t"
-	    << ee_force_.transpose()[2] << "\n";
+	    << ee_force_.transpose()[2] << "\t" 
+	    << ee_torque_.transpose()[0] << "\t"
+	    << ee_torque_.transpose()[1] << "\t"
+	    << ee_torque_.transpose()[2] << "\n";
 	}
 }
 
