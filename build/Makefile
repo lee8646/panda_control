@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named panda_control
+# Target rules for targets named panda_control_vrep
 
 # Build rule for target.
-panda_control: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 panda_control
-.PHONY : panda_control
+panda_control_vrep: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 panda_control_vrep
+.PHONY : panda_control_vrep
 
 # fast build rule for target.
-panda_control/fast:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/build
-.PHONY : panda_control/fast
+panda_control_vrep/fast:
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/build
+.PHONY : panda_control_vrep/fast
 
 src/controller.o: src/controller.cpp.o
 
@@ -129,7 +129,7 @@ src/controller.o: src/controller.cpp.o
 
 # target to build an object file
 src/controller.cpp.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/controller.cpp.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/controller.cpp.o
 .PHONY : src/controller.cpp.o
 
 src/controller.i: src/controller.cpp.i
@@ -138,7 +138,7 @@ src/controller.i: src/controller.cpp.i
 
 # target to preprocess a source file
 src/controller.cpp.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/controller.cpp.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/controller.cpp.i
 .PHONY : src/controller.cpp.i
 
 src/controller.s: src/controller.cpp.s
@@ -147,7 +147,7 @@ src/controller.s: src/controller.cpp.s
 
 # target to generate assembly for a file
 src/controller.cpp.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/controller.cpp.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/controller.cpp.s
 .PHONY : src/controller.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -156,7 +156,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -165,7 +165,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -174,7 +174,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/vrep_bridge.o: src/vrep_bridge.cpp.o
@@ -183,7 +183,7 @@ src/vrep_bridge.o: src/vrep_bridge.cpp.o
 
 # target to build an object file
 src/vrep_bridge.cpp.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/vrep_bridge.cpp.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/vrep_bridge.cpp.o
 .PHONY : src/vrep_bridge.cpp.o
 
 src/vrep_bridge.i: src/vrep_bridge.cpp.i
@@ -192,7 +192,7 @@ src/vrep_bridge.i: src/vrep_bridge.cpp.i
 
 # target to preprocess a source file
 src/vrep_bridge.cpp.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/vrep_bridge.cpp.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/vrep_bridge.cpp.i
 .PHONY : src/vrep_bridge.cpp.i
 
 src/vrep_bridge.s: src/vrep_bridge.cpp.s
@@ -201,7 +201,7 @@ src/vrep_bridge.s: src/vrep_bridge.cpp.s
 
 # target to generate assembly for a file
 src/vrep_bridge.cpp.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/src/vrep_bridge.cpp.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/src/vrep_bridge.cpp.s
 .PHONY : src/vrep_bridge.cpp.s
 
 vrep_src/common/shared_memory.o: vrep_src/common/shared_memory.c.o
@@ -210,7 +210,7 @@ vrep_src/common/shared_memory.o: vrep_src/common/shared_memory.c.o
 
 # target to build an object file
 vrep_src/common/shared_memory.c.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/common/shared_memory.c.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/common/shared_memory.c.o
 .PHONY : vrep_src/common/shared_memory.c.o
 
 vrep_src/common/shared_memory.i: vrep_src/common/shared_memory.c.i
@@ -219,7 +219,7 @@ vrep_src/common/shared_memory.i: vrep_src/common/shared_memory.c.i
 
 # target to preprocess a source file
 vrep_src/common/shared_memory.c.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/common/shared_memory.c.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/common/shared_memory.c.i
 .PHONY : vrep_src/common/shared_memory.c.i
 
 vrep_src/common/shared_memory.s: vrep_src/common/shared_memory.c.s
@@ -228,7 +228,7 @@ vrep_src/common/shared_memory.s: vrep_src/common/shared_memory.c.s
 
 # target to generate assembly for a file
 vrep_src/common/shared_memory.c.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/common/shared_memory.c.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/common/shared_memory.c.s
 .PHONY : vrep_src/common/shared_memory.c.s
 
 vrep_src/remoteApi/extApi.o: vrep_src/remoteApi/extApi.c.o
@@ -237,7 +237,7 @@ vrep_src/remoteApi/extApi.o: vrep_src/remoteApi/extApi.c.o
 
 # target to build an object file
 vrep_src/remoteApi/extApi.c.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApi.c.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApi.c.o
 .PHONY : vrep_src/remoteApi/extApi.c.o
 
 vrep_src/remoteApi/extApi.i: vrep_src/remoteApi/extApi.c.i
@@ -246,7 +246,7 @@ vrep_src/remoteApi/extApi.i: vrep_src/remoteApi/extApi.c.i
 
 # target to preprocess a source file
 vrep_src/remoteApi/extApi.c.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApi.c.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApi.c.i
 .PHONY : vrep_src/remoteApi/extApi.c.i
 
 vrep_src/remoteApi/extApi.s: vrep_src/remoteApi/extApi.c.s
@@ -255,7 +255,7 @@ vrep_src/remoteApi/extApi.s: vrep_src/remoteApi/extApi.c.s
 
 # target to generate assembly for a file
 vrep_src/remoteApi/extApi.c.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApi.c.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApi.c.s
 .PHONY : vrep_src/remoteApi/extApi.c.s
 
 vrep_src/remoteApi/extApiPlatform.o: vrep_src/remoteApi/extApiPlatform.c.o
@@ -264,7 +264,7 @@ vrep_src/remoteApi/extApiPlatform.o: vrep_src/remoteApi/extApiPlatform.c.o
 
 # target to build an object file
 vrep_src/remoteApi/extApiPlatform.c.o:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApiPlatform.c.o
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApiPlatform.c.o
 .PHONY : vrep_src/remoteApi/extApiPlatform.c.o
 
 vrep_src/remoteApi/extApiPlatform.i: vrep_src/remoteApi/extApiPlatform.c.i
@@ -273,7 +273,7 @@ vrep_src/remoteApi/extApiPlatform.i: vrep_src/remoteApi/extApiPlatform.c.i
 
 # target to preprocess a source file
 vrep_src/remoteApi/extApiPlatform.c.i:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApiPlatform.c.i
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApiPlatform.c.i
 .PHONY : vrep_src/remoteApi/extApiPlatform.c.i
 
 vrep_src/remoteApi/extApiPlatform.s: vrep_src/remoteApi/extApiPlatform.c.s
@@ -282,7 +282,7 @@ vrep_src/remoteApi/extApiPlatform.s: vrep_src/remoteApi/extApiPlatform.c.s
 
 # target to generate assembly for a file
 vrep_src/remoteApi/extApiPlatform.c.s:
-	$(MAKE) -f CMakeFiles/panda_control.dir/build.make CMakeFiles/panda_control.dir/vrep_src/remoteApi/extApiPlatform.c.s
+	$(MAKE) -f CMakeFiles/panda_control_vrep.dir/build.make CMakeFiles/panda_control_vrep.dir/vrep_src/remoteApi/extApiPlatform.c.s
 .PHONY : vrep_src/remoteApi/extApiPlatform.c.s
 
 # Help Target
@@ -293,7 +293,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... panda_control"
+	@echo "... panda_control_vrep"
 	@echo "... src/controller.o"
 	@echo "... src/controller.i"
 	@echo "... src/controller.s"

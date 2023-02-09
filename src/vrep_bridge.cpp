@@ -19,6 +19,7 @@ bool VRepBridge::simConnectionCheck()
 }
 void VRepBridge::simLoop()
 {
+	traj_tick_++;
 	tick_++;
 	simxSynchronousTrigger(clientID_);
 }
@@ -28,7 +29,7 @@ void VRepBridge::simxErrorCheck(simxInt error)
 	switch (error)
 	{
 	case simx_error_noerror:
-		return; // no error
+		return;	// no error
 		break;
 	case simx_error_timeout_flag:
 		errorMsg = "The function timed out (probably the network is down or too slow)";
@@ -73,74 +74,126 @@ void VRepBridge::simInit()
 	simxErrorCheck(simxSynchronous(clientID_, true));
 
 	cout << "[INFO] V-Rep connection is established." << endl;
+
 }
 
 void VRepBridge::write()
 {
 	switch (control_mode_)
 	{
-	case CTRL_TORQUE:
+	case CTRL_POSITION:
 	{
 		for (size_t i = 0; i < DOF; i++)
 		{
-			simxFloat velocityLimit;
-
-			if (desired_torque_(i) >= 0.0)
-				velocityLimit = 10e10f;
-			else
-				velocityLimit = -10e10f;
-
-			simxSetJointTargetVelocity(clientID_, motorHandle_[i], velocityLimit, simx_opmode_streaming);
-			simxSetJointForce(clientID_, motorHandle_[i], static_cast<float>(abs(desired_torque_(i))), simx_opmode_streaming);
-			cout << "ttt" << endl;
+			simxSetJointTargetPosition(clientID_, motorHandle_[i], desired_q_(i), simx_opmode_streaming);
 		}
-		break;
+		simxSetJointTargetPosition(clientID_, motorHandle_ee_[0], desired_ee_(0), simx_opmode_streaming);
+		simxSetJointTargetPosition(clientID_, motorHandle_ee_[1], desired_ee_(1), simx_opmode_streaming);
 	}
 	}
 }
 void VRepBridge::read()
 {
 	for (size_t i = 0; i < DOF; i++)
-	{
+	{    
 		simxFloat data;
 		simxGetJointPosition(clientID_, motorHandle_[i], &data, simx_opmode_streaming);
 		current_q_(i) = data;
+		simxGetJointForce(clientID_, motorHandle_[i], &data, simx_opmode_streaming);
+		current_torque_(i) = data;
 		simxGetObjectFloatParameter(clientID_, motorHandle_[i], 2012, &data, simx_opmode_streaming);
 		current_q_dot_(i) = data;
 	}
+	for (size_t i = 0; i < 2; i++)
+	{  
+		simxFloat data;
+		simxGetJointPosition(clientID_, motorHandle_ee_[i], &data, simx_opmode_streaming);
+		current_ee_(i) = data;
+		simxGetObjectFloatParameter(clientID_, motorHandle_ee_[i], 2012, &data, simx_opmode_streaming);
+		current_ee_dot_(i) = data;
+	}
+
+	float force[3];
+	float torque[3];
+	simxUChar state;
+	simxReadForceSensor(clientID_, motorHandle_ee_[2], &state, force, torque, simx_opmode_streaming);
+	for (int i = 0; i < 3; i++)
+	{
+		dataForce_[i] = force[i];
+		dataTorque_[i] = torque[i];
+	}
 }
 
-void VRepBridge::setDesiredPosition(const Eigen::Matrix<double, DOF, 1> &desired_q)
+void VRepBridge::setDesiredPosition(const Eigen::Matrix<double, DOF, 1>& desired_q)
 {
 	desired_q_ = desired_q;
 }
 
-void VRepBridge::setDesiredTorque(const Eigen::Matrix<double, DOF, 1> &desired_torque)
+void VRepBridge::setDesiredEndEffectorPosition(const Eigen::Matrix<double, 2, 1>& desired_ee)
 {
-	for (size_t i = 0; i < DOF; i++)
-		{
-			desired_torque_(i) = desired_torque(i);
-		}
+	desired_ee_ = desired_ee;
 }
 
-const Eigen::Matrix<double, DOF, 1> &VRepBridge::getPosition()
+void VRepBridge::setDesiredTorque(const Eigen::Matrix<double, DOF, 1>& desired_torque)
+{
+	desired_torque_ = desired_torque;
+}
+
+const Eigen::Matrix<double, DOF, 1>& VRepBridge::getPosition()
 {
 	return current_q_;
 }
 
-const Eigen::Matrix<double, DOF, 1> &VRepBridge::getVelocity()
+const Eigen::Matrix<double, DOF, 1>& VRepBridge::getVelocity()
 {
 	return current_q_dot_;
+}
+
+
+const Eigen::Matrix<double, 2, 1>& VRepBridge::getPosition_ee()
+{
+	return current_ee_;
+}
+
+const Eigen::Matrix<double, 2, 1>& VRepBridge::getVelocity_ee()
+{
+	return current_ee_dot_;
+}
+
+const Eigen::Matrix<double, DOF, 1>& VRepBridge::getTorque()
+{
+	return current_torque_;
+}
+const Eigen::Matrix<double, 3, 1>& VRepBridge::getTorque_ee()
+{
+	return dataTorque_;
+}
+
+const Eigen::Matrix<double, 3, 1>& VRepBridge::getForce_ee()
+{
+	return dataForce_;
 }
 
 void VRepBridge::getHandle()
 {
 	cout << "[INFO] Getting handles." << endl;
+	const string joint_name1 = JOINT_HANDLE_PREFIX_1;
+	const string joint_name2 = JOINT_HANDLE_PREFIX_2;
+	const string joint_name3 = JOINT_HANDLE_PREFIX_3;
+	simxErrorCheck(simxGetObjectHandle(clientID_, joint_name1.c_str(), &motorHandle_ee_[0], simx_opmode_oneshot_wait));
+	cout << "[INFO] Getting a handle named " << joint_name1 << endl;
+	simxErrorCheck(simxGetObjectHandle(clientID_, joint_name2.c_str(), &motorHandle_ee_[1], simx_opmode_oneshot_wait));
+	cout << "[INFO] Getting a handle named " << joint_name2 << endl;
+	simxErrorCheck(simxGetObjectHandle(clientID_, joint_name3.c_str(), &motorHandle_ee_[2], simx_opmode_oneshot_wait));
+	cout << "[INFO] Getting a handle named " << joint_name3 << endl;
+		
+
 	for (int i = 0; i < DOF; i++)
 	{
 		const string joint_name = JOINT_HANDLE_PREFIX + std::to_string(i + 1);
 		cout << "[INFO] Getting a handle named " << joint_name << endl;
 		simxErrorCheck(simxGetObjectHandle(clientID_, joint_name.c_str(), &motorHandle_[i], simx_opmode_oneshot_wait));
 	}
+
 	cout << "[INFO] The handle has been imported." << endl;
 }

@@ -41,8 +41,9 @@ int kbhit(void)
 
 int main()
 {
-	VRepBridge vb(VRepBridge::CTRL_TORQUE); // Torque controlled
-	const double hz = 1000 ;
+	// VRepBridge vb(VRepBridge::CTRL_TORQUE); // Torque controlled
+	VRepBridge vb(VRepBridge::CTRL_POSITION); // Position controlled 
+	const double hz = 100 ;
 	ArmController ac(hz);
 	bool is_simulation_run = true;
 	bool exit_flag = false;
@@ -51,13 +52,16 @@ int main()
 	while (vb.simConnectionCheck() && !exit_flag)
 	{
 		vb.read();
-		ac.readData(vb.getPosition(), vb.getVelocity());
+		ac.readData(vb.getPosition(), vb.getVelocity(), vb.getTorque());
+		ac.readData_ee(vb.getPosition_ee(), vb.getVelocity_ee(), vb.getForce_ee(), vb.getTorque_ee());
 		if (is_first)
 		{
 			vb.simLoop();
 			vb.read();
-			ac.readData(vb.getPosition(), vb.getVelocity());
+			ac.readData(vb.getPosition(), vb.getVelocity(), vb.getTorque());
+			ac.readData_ee(vb.getPosition_ee(), vb.getVelocity_ee(), vb.getForce_ee(), vb.getTorque_ee());
 			cout << "Initial q: " << vb.getPosition().transpose() << endl;
+			cout << "Initial q_ee: " << vb.getPosition_ee().transpose() << endl;
 			is_first = false;
 			ac.initPosition();
 		}
@@ -74,6 +78,28 @@ int main()
 			case 'h':
 				ac.setMode("joint_ctrl_home");
 				break;
+			case 't':
+				ac.setMode("torque_ctrl_dynamic");
+				break;
+			case '1':
+				ac.setMode("simple_jacobian");
+				break;
+			case '2':
+				ac.setMode("feedback_jacobian");
+				break;
+			case '3':
+				ac.setMode("CLIK");
+				break;
+			case '4':
+				ac.setMode("CLIK_circle");
+				break;
+			case '5':
+				ac.setMode("CLIK_square");
+				break;
+			case '6':
+				ac.setMode("CLIK_eight");
+				break;
+
 
 			case '\t':
 				if (is_simulation_run) {
@@ -96,16 +122,11 @@ int main()
 
 		if (is_simulation_run) {
 			ac.compute();
-			cout << "h" << endl;
 			vb.setDesiredPosition(ac.getDesiredPosition());
-            cout << "he" << endl;
+			vb.setDesiredEndEffectorPosition(ac.getDesiredEndEffectorPosition());
 			vb.setDesiredTorque(ac.getDesiredTorque());
-			cout << "hel" << endl;
-		
 			vb.write();
-			cout << "test2" << endl;
 			vb.simLoop();
-			cout << "test3" << endl;
 		}
 	}
 		

@@ -1,4 +1,4 @@
-project(panda_control)
+project(panda_control_vrep)
 cmake_minimum_required(VERSION 2.8)
 
 LIST( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
@@ -18,6 +18,7 @@ include_directories(
 
 add_definitions (-DNON_MATLAB_PARSING)
 add_definitions (-DMAX_EXT_API_CONNECTIONS=255)
+#add_definitions (-DDO_NOT_USE_SHARED_MEMORY)
 
 set (SOURCES
 	src/controller.cpp
@@ -29,11 +30,15 @@ set (SOURCES
 	vrep_src/common/shared_memory.c
 )
 
-add_executable(panda_control ${SOURCES})
+add_executable(panda_control_vrep ${SOURCES})
 
 add_definitions(-DDOF=7)
 
-target_link_libraries(panda_control	${RBDL_LIBRARY}	pthread	rt)
+target_link_libraries(panda_control_vrep
+	${RBDL_LIBRARY}
+	pthread
+	rt
+)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 

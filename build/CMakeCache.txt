@@ -145,7 +145,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=panda_control
+CMAKE_PROJECT_NAME:STATIC=panda_control_vrep
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -249,10 +249,10 @@ RBDL_URDFREADER_INCLUDE_DIR:PATH=RBDL_URDFREADER_INCLUDE_DIR-NOTFOUND
 RBDL_URDFREADER_LIBRARY:FILEPATH=RBDL_URDFREADER_LIBRARY-NOTFOUND
 
 //Value Computed by CMake
-panda_control_BINARY_DIR:STATIC=/home/lee8646/panda_control/build
+panda_control_vrep_BINARY_DIR:STATIC=/home/lee8646/panda_control/build
 
 //Value Computed by CMake
-panda_control_SOURCE_DIR:STATIC=/home/lee8646/panda_control
+panda_control_vrep_SOURCE_DIR:STATIC=/home/lee8646/panda_control
 
 
 ########################
