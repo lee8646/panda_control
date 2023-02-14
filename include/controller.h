@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "math_type_define.h"
+#include <math.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <termios.h>
 
 #define EYE(X) Matrix<double, X, X>::Identity()
 #define PI 3.14159265359

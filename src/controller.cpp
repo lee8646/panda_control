@@ -115,7 +115,7 @@ void ArmController::compute()
 		target_position_ee << 2.5, 2.5;
 
 		moveJointPosition(target_position, 1.0);
-	    moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);	
+	    moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);	
 	}
 	else if(control_mode_ == "joint_ctrl_init")
 	{
@@ -124,7 +124,7 @@ void ArmController::compute()
 		target_position << 0.0, 0.0, 0.0, -M_PI / 2., 0.0, M_PI / 2, M_PI / 4;
 		target_position_ee << 0, 0;
 		moveJointPosition(target_position, 1.0);   
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);             
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);             
 	}
 	else if (control_mode_ == "simple_jacobian")
 	{   
@@ -136,7 +136,7 @@ void ArmController::compute()
 			0, 0, -1;
 		target_position_ee << 2.5, 2.5;
 		simpleJacobianControl(target_x, 2.0);
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else if (control_mode_ == "feedback_jacobian")
 	{   
@@ -148,7 +148,7 @@ void ArmController::compute()
 			0, 0, -1;
 		target_position_ee << 2.5, 2.5;
 		feedbackJacobianControl(target_x, 2.0);
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else if (control_mode_ == "CLIK")
 	{
@@ -160,32 +160,37 @@ void ArmController::compute()
 			0, 0, -1;
 		target_position_ee << 0, 0;
 		CLIK(target_x, 2.0);
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else if (control_mode_ == "CLIK_circle")
 	{
 		Vector2d target_position_ee;
 		target_position_ee << 0, 0;
 		CLIK_traj_circle();
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else if (control_mode_ == "CLIK_square")
 	{
 		Vector2d target_position_ee;
 		target_position_ee << 0, 0;
 		CLIK_traj_square();
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else if (control_mode_ == "CLIK_eight")
 	{
 		Vector2d target_position_ee;
 		target_position_ee << 0, 0;
 		CLIK_traj_eight();
-		moveEndEffectorPosition(deg2rad(target_position_ee), 1.0);
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);
 	}
 	else
 	{
-		torque_desired_ = g_;
+		Vector7d target_position;
+		Vector2d target_position_ee;
+		target_position << 0.0, 0.0, 0.0, -M_PI / 2., 0.0, M_PI / 2, M_PI / 4;
+		target_position_ee << 0, 0;
+		moveJointPosition(target_position, 1.0);   
+		moveEndEffectorPosition(deg2rad(target_position_ee), 0.1);    
 	}
 
 	printState();
@@ -476,7 +481,8 @@ void ArmController::CLIK_traj_square()
 	    x_error.tail(3) = DyrosMath::getPhi(CalcBodyWorldOrientation(*model_, q_desired_, body_id_[DOF - 1], false).transpose(), rotation);
 
 	    Vector6d kp_diag;
-	    kp_diag << 50, 50, 50, 10, 10, 10;
+	    kp_diag << 40, 40, 40, 45, 42, 45; // newton-engine gain
+		// kp_diag << 50, 50, 50, 10, 10, 10; // Bullet & ODE -engine gain
  	    Matrix6d kp = kp_diag.asDiagonal();
 
 	    Matrix<double, 6, 7> j_qd = jacobianFromqd(0);
@@ -545,7 +551,8 @@ void ArmController::CLIK_traj_circle()
 	    x_error.tail(3) = DyrosMath::getPhi(CalcBodyWorldOrientation(*model_, q_desired_, body_id_[DOF - 1], false).transpose(), rotation);
 
 	    Vector6d kp_diag;
-	    kp_diag << 50, 50, 50, 10, 10, 10;
+	    kp_diag << 40, 40, 40, 45, 42, 45; // newton-engine gain
+		// kp_diag << 50, 50, 50, 10, 10, 10; // Bullet & ODE-engine gain
  	    Matrix6d kp = kp_diag.asDiagonal();
 
 	    Matrix<double, 6, 7> j_qd = jacobianFromqd(0);
@@ -614,7 +621,8 @@ void ArmController::CLIK_traj_eight()
 	    x_error.tail(3) = DyrosMath::getPhi(CalcBodyWorldOrientation(*model_, q_desired_, body_id_[DOF - 1], false).transpose(), rotation);
 
 	    Vector6d kp_diag;
-	    kp_diag << 50, 50, 50, 10, 10, 10;
+	    kp_diag << 40, 40, 40, 45, 42, 45; // newton-engine gain
+		// kp_diag << 50, 50, 50, 10, 10, 10; // Bullet & ODE -engine gain
  	    Matrix6d kp = kp_diag.asDiagonal();
 
 	    Matrix<double, 6, 7> j_qd = jacobianFromqd(0);
